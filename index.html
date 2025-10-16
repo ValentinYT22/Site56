@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="ro">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -7,442 +7,278 @@
     <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600&family=Montserrat:wght@400;600&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="/styles.css">
     <style>
+        :root{
+            --accent: #1db954;
+            --accent-dark: #169c46;
+            --card-bg: rgba(30,30,30,0.75);
+            --muted: #b3b3b3;
+        }
+
+        * { box-sizing: border-box; }
+
         body {
-    font-family: 'Poppins', sans-serif;
-    margin: 0;
-    padding: 0;
-    background: linear-gradient(135deg, #1db954, #121212);
-    background-image: url('Selena.jpg');
-    background-size: cover;
-    color: #fff;
-    display: flex;
-    flex-direction: column;
-    justify-content: space-between;
-    min-height: 100vh;
-}
+            font-family: 'Poppins', sans-serif;
+            margin: 0;
+            padding: 0;
+            background: linear-gradient(135deg, rgba(18,18,18,0.6), rgba(18,18,18,0.6)), url('Selena.jpg') center/cover no-repeat;
+            color: #fff;
+            display: flex;
+            flex-direction: column;
+            min-height: 100vh;
+            -webkit-font-smoothing: antialiased;
+            -moz-osx-font-smoothing: grayscale;
+        }
 
-header {
-    background-color: rgba(0, 0, 0, 0.8);
-    padding: 20px 30px;
-    text-align: center;
-    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.6);
-}
+        header {
+            backdrop-filter: blur(6px);
+            background-color: rgba(0,0,0,0.55);
+            padding: 18px 28px;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            gap: 20px;
+            position: relative;
+            box-shadow: 0 6px 18px rgba(0,0,0,0.6);
+        }
 
-header h1 {
-    font-family: 'Montserrat', sans-serif;
-    font-size: 32px;
-    color: #1db954;
-    margin: 0;
-}
+        .brand {
+            display:flex;
+            align-items:center;
+            gap:12px;
+        }
 
-main {
-    padding: 20px;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    flex: 1;
-}
+        header h1 {
+            font-family: 'Montserrat', sans-serif;
+            font-size: 26px;
+            color: var(--accent);
+            margin: 0;
+            letter-spacing: 0.4px;
+        }
 
-#music-list {
-    display: flex;
-    flex-wrap: wrap;
-    gap: 30px;
-    justify-content: center;
-    max-width: 1200px;
-    margin-bottom: 40px;
-}
+        header p {
+            margin: 0;
+            color: var(--muted);
+            font-size: 13px;
+        }
 
-.song-card {
-    background-color: rgba(50, 50, 50, 0.9);
-     background-image: url('eu2.jpg');
-    border-radius: 25px;
-    padding: 25px;
-    width: 250px;
-    text-align: center;
-    position: relative;
-    transition: transform 0.3s ease;
-}
+        .search {
+            margin-left: auto;
+        }
 
-.song-card:hover {
-    transform: translateY(-5px);
-}
+        #search-bar {
+            padding: 8px 12px;
+            border-radius: 999px;
+            border: 1px solid rgba(255,255,255,0.12);
+            background: rgba(255,255,255,0.03);
+            color: #fff;
+            outline: none;
+            width: 220px;
+            transition: width 0.25s ease, background 0.25s ease;
+        }
+        #search-bar::placeholder { color: rgba(255,255,255,0.5); }
+        #search-bar:focus { width: 320px; background: rgba(255,255,255,0.04); }
 
-.song-card img {
-    width: 150px;
-    height: 150px;
-    object-fit: cover;
-    border-radius: 50%;
-    margin: 0 auto;
-    box-shadow: 0 0 15px rgba(0, 0, 0, 0.8);
-    border: 5px solid #1db954;
-}
+        main {
+            padding: 28px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 36px;
+            flex: 1;
+        }
 
-.audio-controls {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    gap: 10px;
-    margin-top: 15px;
-    width: 100%;
-}
+        #music-list {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+            gap: 28px;
+            justify-content: center;
+            max-width: 1200px;
+            width: 100%;
+            margin-bottom: 8px;
+        }
 
-.volume-control {
-    width: 100%;
-    padding: 0 10px;
-}
+        .song-card {
+            background: linear-gradient(180deg, rgba(255,255,255,0.02), rgba(0,0,0,0.35)), var(--card-bg);
+            border-radius: 18px;
+            padding: 18px;
+            text-align: center;
+            position: relative;
+            transition: transform 0.25s ease, box-shadow 0.25s ease;
+            box-shadow: 0 6px 18px rgba(0,0,0,0.5);
+        }
 
-.volume-slider {
-    width: 100%;
-    height: 4px;
-    appearance: none;
-    -webkit-appearance: none;
-    background: rgba(255, 255, 255, 0.1);
-    border-radius: 2px;
-    outline: none;
-    opacity: 0.7;
-    transition: opacity 0.2s;
-}
+        .song-card:hover {
+            transform: translateY(-6px);
+            box-shadow: 0 18px 40px rgba(0,0,0,0.6);
+        }
 
-.volume-slider:hover {
-    opacity: 1;
-}
+        .song-card img {
+            width: 140px;
+            height: 140px;
+            object-fit: cover;
+            border-radius: 50%;
+            margin: 0 auto;
+            box-shadow: 0 8px 18px rgba(0,0,0,0.6);
+            border: 5px solid var(--accent);
+            transition: transform 0.4s ease;
+        }
 
-.volume-slider::-webkit-slider-thumb {
-    -webkit-appearance: none;
-    appearance: none;
-    width: 12px;
-    height: 12px;
-    background: #1db954;
-    border-radius: 50%;
-    cursor: pointer;
-}
+        .rotating { animation: rotateVinyl 5s linear infinite; transform-origin: 50% 50%; }
 
-.volume-slider::-moz-range-thumb {
-    width: 12px;
-    height: 12px;
-    background: #1db954;
-    border-radius: 50%;
-    cursor: pointer;
-    border: none;
-}
+        .song-title {
+            font-size: 16px;
+            font-weight: 600;
+            color: #fff;
+            margin: 12px 0;
+        }
 
-.play-button {
-    background-color: #1db954;
-    color: white;
-    border: none;
-    padding: 10px 30px;
-    border-radius: 20px;
-    cursor: pointer;
-    font-family: 'Poppins', sans-serif;
-    font-weight: 600;
-    transition: all 0.3s ease;
-}
+        .audio-controls {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 10px;
+            margin-top: 8px;
+            width: 100%;
+        }
 
-.play-button:hover {
-    background-color: #169c46;
-    transform: scale(1.05);
-}
+        .play-button {
+            background-color: var(--accent);
+            color: white;
+            border: none;
+            padding: 8px 20px;
+            border-radius: 999px;
+            cursor: pointer;
+            font-family: 'Poppins', sans-serif;
+            font-weight: 600;
+            transition: all 0.2s ease;
+            font-size: 14px;
+        }
 
-.progress-container {
-    width: 100%;
-    height: 4px;
-    background-color: rgba(255, 255, 255, 0.1);
-    border-radius: 2px;
-    overflow: hidden;
-}
+        .play-button:hover { background-color: var(--accent-dark); transform: scale(1.03); }
 
-.progress-bar {
-    width: 0;
-    height: 100%;
-    background-color: #1db954;
-    transition: width 0.1s linear;
-}
+        .volume-slider {
+            width: 100%;
+            height: 6px;
+            -webkit-appearance: none;
+            appearance: none;
+            background: rgba(255,255,255,0.07);
+            border-radius: 999px;
+            outline: none;
+        }
+        .volume-slider::-webkit-slider-thumb {
+            -webkit-appearance: none;
+            width: 14px; height: 14px;
+            background: var(--accent);
+            border-radius: 50%;
+            box-shadow: 0 2px 6px rgba(0,0,0,0.6);
+            cursor: pointer;
+        }
 
-.time-display {
-    font-size: 12px;
-    color: #b3b3b3;
-    margin-top: 5px;
-}
+        .progress-container {
+            width: 100%;
+            height: 6px;
+            background-color: rgba(255,255,255,0.06);
+            border-radius: 999px;
+            overflow: hidden;
+        }
+        .progress-bar {
+            width: 0;
+            height: 100%;
+            background-color: var(--accent);
+            transition: width 0.12s linear;
+        }
 
-@keyframes rotateVinyl {
-    0% { transform: rotate(0deg); }
-    100% { transform: rotate(360deg); }
-}
+        .time-display { font-size: 12px; color: var(--muted); }
 
-.rotating {
-    animation: rotateVinyl 5s linear infinite;
-}
+        @keyframes rotateVinyl {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
 
-.song-title {
-    font-size: 18px;
-    font-weight: bold;
-    color: #fff;
-    margin: 15px 0;
-}
+        #youtube-videos {
+            width: 100%;
+            max-width: 1200px;
+        }
 
-#youtube-videos {
-    width: 100%;
-    max-width: 1200px;
-    padding: 20px;
-}
+        #youtube-videos h2 { color: var(--accent); margin: 0 0 12px 0; }
 
-.video-list {
-    list-style: none;
-    padding: 0;
-    display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
-    gap: 30px;
-}
+        .video-list {
+            list-style: none;
+            padding: 0;
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 20px;
+        }
 
-.video-item {
-    background-color: rgba(50, 50, 50, 0.9);
-    border-radius: 15px;
-    padding: 20px;
-    transition: transform 0.3s ease;
-}
+        .video-item {
+            background: var(--card-bg);
+            border-radius: 12px;
+            padding: 12px;
+            transition: transform 0.2s ease, box-shadow 0.2s ease;
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+        }
+        .video-item:hover { transform: translateY(-6px); box-shadow: 0 14px 34px rgba(0,0,0,0.5); }
+        .video-item h3 { color: var(--accent); margin: 0; font-size: 15px; }
 
-.video-item:hover {
-    transform: translateY(-5px);
-}
+        .thumbnail { position: relative; padding-bottom: 56.25%; height: 0; border-radius: 8px; overflow: hidden; background: #000; }
+        .thumbnail iframe { position: absolute; inset: 0; width: 100%; height: 100%; border: 0; }
 
-.video-item h3 {
-    color: #1db954;
-    margin: 0 0 15px 0;
-}
+        footer {
+            background-color: rgba(0,0,0,0.7);
+            color: var(--muted);
+            text-align: center;
+            padding: 14px;
+            border-top: 1px solid rgba(255,255,255,0.02);
+            font-size: 13px;
+        }
 
-.thumbnail {
-    position: relative;
-    padding-bottom: 56.25%;
-    height: 0;
-    border-radius: 10px;
-    overflow: hidden;
-}
+        footer a { color: var(--accent); text-decoration: none; font-weight: 600; }
+        footer a:hover { color: var(--accent-dark); text-decoration: underline; }
 
-.thumbnail iframe {
-    position: absolute;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
-}
-
-footer {
-    background-color: rgba(0, 0, 0, 0.9);
-    color: #b3b3b3;
-    text-align: center;
-    padding: 15px;
-    border-top: 1px solid #333;
-}
-
-footer a {
-    color: #1db954;
-    text-decoration: none;
-    font-weight: bold;
-    transition: color 0.3s ease;
-}
-
-footer a:hover {
-    color: #169c46;
-    text-decoration: underline;
-}
-#music-list {
-    display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
-    gap: 50px; /* Increased gap for more distance */
-    justify-content: center;
-    max-width: 1200px;
-    margin-bottom: 40px;
-}
+        /* Responsive tweaks */
+        @media (max-width:600px){
+            header { padding: 14px; }
+            #search-bar { width: 140px; }
+            #search-bar:focus { width: 200px; }
+        }
     </style>
 </head>
 <body>
     <header>
-        <h1>AdamMM Music</h1>
-        <div style="position: absolute; top: 20px; right: 30px;">
-            <input type="text" id="search-bar" placeholder="Caută..." style="padding: 5px; border-radius: 5px; border: 1px solid #ccc;">
+        <div class="brand">
+            <img src="logo.png" alt="logo" style="width:46px;height:46px;border-radius:8px;object-fit:cover;border:2px solid rgba(255,255,255,0.06)">
+            <div>
+                <h1>AdamMM Music</h1>
+                <p>Beaturi și melodii originale</p>
+            </div>
         </div>
-        <script>
-            document.getElementById('search-bar').addEventListener('input', function(e) {
-            const query = e.target.value.toLowerCase().trim();
-            const songCards = document.querySelectorAll('.song-card');
-            const videoItems = document.querySelectorAll('.video-item');
 
-            songCards.forEach(card => {
-                const title = card.querySelector('.song-title').textContent.toLowerCase();
-                card.style.display = title.includes(query) ? '' : 'none';
-            });
-
-            videoItems.forEach(item => {
-                const title = item.querySelector('h3').textContent.toLowerCase();
-                item.style.display = title.includes(query) ? '' : 'none';
-            });
-            });
-        </script>
+        <div class="search">
+            <input type="text" id="search-bar" placeholder="Caută...">
+        </div>
     </header>
+
     <main>
-        <section id="music-list">
+        <section id="music-list" aria-label="Lista piese">
             <!-- Song cards will be dynamically loaded here -->
         </section>
-           <section id="youtube-videos">
-    <h2>Videoclipuri YouTube</h2>
 
-
-
-    <!-- Playlist cu imagine de fundal -->
-
-    <div class="video-playlist">
-
-        <div class="playlist-header">
-
-        </div>
-
-
-
-        <ul class="video-list">
-
-            <!-- Videoclip 1 -->
-
-            <li class="video-item">
-
-                <h3>Imparatia Gheti</h3>
-
-                <div class="thumbnail">
-
-                    <iframe src="https://www.youtube.com/embed/csWXCLusRkI" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
-
-                </div>
-
-            </li>
-
-
-
-            <!-- Videoclip 2 -->
-
-            <li class="video-item">
-
-                <h3>Ce s-a intamplat cu noi</h3>
-
-                <div class="thumbnail">
-
-                    <iframe src="https://www.youtube.com/embed/cBZ0vtGBs8g" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
-
-                </div>
-
-            </li>
-
-
-
-            <!-- Videoclip 3 -->
-
-            <li class="video-item">
-
-                <h3>Iubirea Toxica</h3>
-
-                <div class="thumbnail">
-
-                    <iframe src="https://www.youtube.com/embed/mzgZI19Oj_A" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
-
-                </div>
-
-            </li>
-                    <!-- Videoclip 4 -->
-                <li class="video-item">
-
-    <h3>Umbre Pe Beat</h3>
-
-    <div class="thumbnail">
-
-        <iframe src="https://www.youtube.com/embed/p97z3bDusOY" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
-
-     </div>
-
-      </li>
-
-             <!-- Videoclip 5 -->
-                <li class="video-item">
-
-    <h3>Baby,tu esti toxica</h3>
-
-    <div class="thumbnail">
-
-        <iframe src="https://www.youtube.com/embed/v16JuylUbxw" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
-
-     </div>
-
-      </li>
-<!-- Videoclip 6-->
-<li class="video-item">
-
-    <h3>Din Mii</h3>
-
-    <div class="thumbnail">
-
-        <iframe src="https://www.youtube.com/embed/o8tgRX2xSZs" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
-
-    </div>
-
-</li>
- <!-- Videoclip 7-->
-<li class="video-item">
-
-    <h3>Iubire cu otrava</h3>
-
-    <div class="thumbnail">
-
-        <iframe src="https://www.youtube.com/embed/iAPKTCGDvbo" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
-
-    </div>
-
-</li>
-            <!-- Videoclip 8-->
-            <li class="video-item">
-    <h3>Andreea top</h3>
-    <div class="thumbnail">
-        <iframe src="https://www.youtube.com/embed/OU4Gw3uAGfo" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
-    </div>
-</li>
-            <!-- Videoclip 9-->
-            <li class="video-item">
-    <h3>Antidot</h3>
-    <div class="thumbnail">
-        <iframe src="https://www.youtube.com/embed/qfzWXK9NQ0c" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
-    </div>
-</li>
-            <!-- Videoclip 10-->
-            <li class="video-item">
-    <h3>Totul este toxic</h3>
-    <div class="thumbnail">
-        <iframe src="https://www.youtube.com/embed/aCK-hOnVy5I" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
-    </div>
-</li>
-            <!-- Videoclip 11-->
-            <li class="video-item">
-    <h3>Iadul tau </h3>
-    <div class="thumbnail">
-        <iframe src="https://www.youtube.com/embed/bzCbWfUifwc" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
-    </div>
-</li>
-            <!-- Videoclip 12-->
-            <li class="video-item">
-    <h3>Toxic love</h3>
-    <div class="thumbnail">
-        <iframe src="https://www.youtube.com/embed/PeJf27TeoGY" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
-    </div>  
-</li>
-        </ul>
-
-    </div>
-
-      </section>
-
-      <section id="Iubirea Toxica">
-
-       <h2></h2>
-     </section>
+        <section id="youtube-videos">
+            <h2>Videoclipuri YouTube</h2>
+            <div class="video-playlist">
+                <ul class="video-list">
+                    <!-- Videoclipuri vor fi încărcate din script -->
+                </ul>
+            </div>
+        </section>
     </main>
+
     <footer>
-        <p>&copy; 2025 Adam Music. Toate drepturile rezervate. <a href="https://www.youtube.com/@AdamMMof" target="_blank">YouTube</a></p>
+        <p>&copy; 2025 Adam Music. Toate drepturile rezervate. <a href="https://www.youtube.com/@AdamMMof" target="_blank" rel="noopener">YouTube</a></p>
     </footer>
+
     <script type="module" src="/script.js"></script>
     <script>
        const songs = [
@@ -522,7 +358,7 @@ function createSongCard(song) {
                 <button onclick="playAudio('${song.id}', 'image${song.id.replace('audio', '')}')" class="play-button">
                     Play
                 </button>
-                <div class="volume-control">
+                <div class="volume-control" style="width:100%">
                     <input type="range" 
                            min="0" 
                            max="1" 
@@ -532,7 +368,7 @@ function createSongCard(song) {
                            oninput="adjustVolume('${song.id}', this.value)"
                            title="Volume">
                 </div>
-                <div class="progress-container">
+                <div class="progress-container" role="progressbar" aria-valuemin="0" aria-valuemax="100" aria-valuenow="0">
                     <div class="progress-bar" id="progress-${song.id}"></div>
                 </div>
                 <div class="time-display">
@@ -562,6 +398,7 @@ function createYoutubeVideo(video) {
 }
 
 function formatTime(seconds) {
+    if (!isFinite(seconds)) return '0:00';
     const minutes = Math.floor(seconds / 60);
     const remainingSeconds = Math.floor(seconds % 60);
     return `${minutes}:${remainingSeconds.toString().padStart(2, '0')}`;
@@ -570,64 +407,63 @@ function formatTime(seconds) {
 window.setDuration = function(audioId) {
     const audio = document.getElementById(audioId);
     const durationElement = document.getElementById(`duration-${audioId}`);
-    durationElement.textContent = formatTime(audio.duration);
+    if (audio && durationElement) durationElement.textContent = formatTime(audio.duration);
 };
 
 window.updateProgress = function(audioId) {
     const audio = document.getElementById(audioId);
     const progressBar = document.getElementById(`progress-${audioId}`);
     const currentTimeElement = document.getElementById(`current-${audioId}`);
+    if (!audio || !progressBar || !currentTimeElement) return;
     
-    const progress = (audio.currentTime / audio.duration) * 100;
+    const progress = audio.duration ? (audio.currentTime / audio.duration) * 100 : 0;
     progressBar.style.width = `${progress}%`;
     currentTimeElement.textContent = formatTime(audio.currentTime);
 };
 
 window.adjustVolume = function(audioId, value) {
     const audio = document.getElementById(audioId);
-    audio.volume = value;
+    currentVolume = parseFloat(value);
+    if (audio) audio.volume = currentVolume;
 };
 
 window.playAudio = function(audioId, imageId) {
     const audio = document.getElementById(audioId);
     const image = document.getElementById(imageId);
     const button = document.querySelector(`#card-${audioId} .play-button`);
+    if (!audio) return;
     
     if (currentlyPlaying && currentlyPlaying !== audio) {
         currentlyPlaying.pause();
         const currentImage = document.getElementById(`image${currentlyPlaying.id.replace('audio', '')}`);
         const currentButton = document.querySelector(`#card-${currentlyPlaying.id} .play-button`);
-        currentImage.classList.remove("rotating");
-        currentButton.textContent = "Play";
+        if (currentImage) currentImage.classList.remove("rotating");
+        if (currentButton) currentButton.textContent = "Play";
     }
 
     if (audio.paused) {
         audio.play();
-        image.classList.add("rotating");
-        button.textContent = "Pause";
+        if (image) image.classList.add("rotating");
+        if (button) button.textContent = "Pause";
         currentlyPlaying = audio;
         audio.volume = currentVolume;
     } else {
         audio.pause();
-        image.classList.remove("rotating");
-        button.textContent = "Play";
+        if (image) image.classList.remove("rotating");
+        if (button) button.textContent = "Play";
         currentlyPlaying = null;
     }
 
-    // Adaugă evenimentul pentru redarea următoarei piese
     audio.addEventListener('ended', () => {
-        image.classList.remove("rotating");
-        button.textContent = "Play";
+        if (image) image.classList.remove("rotating");
+        if (button) button.textContent = "Play";
         currentlyPlaying = null;
 
-        // Găsește următoarea piesă
         const currentIndex = songs.findIndex(song => song.id === audioId);
-        const nextIndex = (currentIndex + 1) % songs.length; // Trecere circulară
+        const nextIndex = (currentIndex + 1) % songs.length;
         const nextSong = songs[nextIndex];
-
-        // Redă următoarea piesă
-        playAudio(nextSong.id, `image${nextSong.id.replace('audio', '')}`);
-    });
+        if (nextSong) playAudio(nextSong.id, `image${nextSong.id.replace('audio', '')}`);
+    }, { once: true });
 };
 
 // Keyboard shortcuts
@@ -637,8 +473,8 @@ document.addEventListener('keydown', (e) => {
     switch(e.code) {
         case 'Space':
             e.preventDefault();
-            const button = document.querySelector(`#card-${currentlyPlaying.id} .play-button`);
-            button.click();
+            const btn = document.querySelector(`#card-${currentlyPlaying.id} .play-button`);
+            if (btn) btn.click();
             break;
         case 'ArrowUp':
             e.preventDefault();
@@ -657,13 +493,31 @@ document.addEventListener('DOMContentLoaded', () => {
     const musicList = document.getElementById('music-list');
     const videoList = document.querySelector('.video-list');
 
-    musicList.innerHTML = songs.map(createSongCard).join('');
-    videoList.innerHTML = youtubeVideos.map(createYoutubeVideo).join('');
+    if (musicList) musicList.innerHTML = songs.map(createSongCard).join('');
+    if (videoList) videoList.innerHTML = youtubeVideos.map(createYoutubeVideo).join('');
+
+    // search functionality
+    const searchInput = document.getElementById('search-bar');
+    if (searchInput) {
+        searchInput.addEventListener('input', function(e) {
+            const query = e.target.value.toLowerCase().trim();
+            const songCards = document.querySelectorAll('.song-card');
+            const videoItems = document.querySelectorAll('.video-item');
+
+            songCards.forEach(card => {
+                const titleEl = card.querySelector('.song-title');
+                const title = titleEl ? titleEl.textContent.toLowerCase() : '';
+                card.style.display = title.includes(query) ? '' : 'none';
+            });
+
+            videoItems.forEach(item => {
+                const titleEl = item.querySelector('h3');
+                const title = titleEl ? titleEl.textContent.toLowerCase() : '';
+                item.style.display = title.includes(query) ? '' : 'none';
+            });
+        });
+    }
 });
-
     </script>
-
-
-        
 </body>
 </html>
